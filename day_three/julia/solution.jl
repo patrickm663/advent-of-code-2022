@@ -23,7 +23,8 @@ global dictMap = Dict("a" => 1, "b" => 2,
                         "S" => 45, "T" => 46,
                         "U" => 47, "V" => 48,
                         "W" => 49, "X" => 50,
-                        "Y" => 51, "Z" => 52
+                        "Y" => 51, "Z" => 52,
+                        "." => 0
                      )
 
 function dayThreePartOne(file)
@@ -39,17 +40,50 @@ function dayThreePartOne(file)
     return sum
 end
 
-function getCommonItem(item)::String
-    item = string(item)
-    divider::Int = length(item)/2
-    firstComponent = item[1:divider]
-    secondComponent = item[(divider+1):end]
-
-    for s in firstComponent
-        if in(s, secondComponent)
-            return string(s)
+function dayThreePartTwo(file)
+    sum = 0
+    rucksack = Vector{String}(undef, 3)
+    line = 0
+    open(file) do f
+        while ! eof(f)
+            line += 1
+            rucksack[line] = readline(f)
+            if line == 3
+                commonItem = getCommonItem(rucksack; array=true)
+                itemValue = dictMap[commonItem]
+                sum += itemValue
+                line = 0
+            end
         end
     end
+    return sum
+end
+
+function getCommonItem(item; array=false)::String
+    if !array
+        item = string(item)
+        divider::Int = length(item)/2
+        firstComponent = item[1:divider]
+        secondComponent = item[(divider+1):end]
+
+        for s in firstComponent
+            if in(s, secondComponent)
+                return string(s)
+            end
+        end
+    else
+        firstComponent = item[1]
+        secondComponent = item[2]
+        thirdComponent = item[3]
+
+        for s in firstComponent
+            if in(s, secondComponent) && in(s, thirdComponent)
+                return string(s)
+            end
+        end
+    end
+    return "."
 end
 
 @time @show dayThreePartOne("input.txt")
+@time @show dayThreePartTwo("input.txt")
