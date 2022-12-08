@@ -8,3 +8,7 @@ First attempt used Julia. The run time is 0.03s which is fairly good given 6 yea
 
 ## Day Two⭐⭐
 Ran into an issue here with how Julia treats strings. It seems you cannot change a character at an index in place, so switched to the strategy of removing the space and treating it as a two character string. Both Part 1 and Part 2 mainly used if-else statements to assign scores. Run time was 0.02s and 0.0014s, all native Julia. 
+
+## Day Three⭐⭐
+
+## Day Four⭐⭐
